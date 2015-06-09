@@ -12,7 +12,7 @@
 #include "internal.hpp"
 #include "io_service_pool.hpp"
 #include "http_connection.hpp"
-
+#include <boost/asio/ssl.hpp>
 #include <boost/noncopyable.hpp>
 
 namespace av_router {
@@ -52,6 +52,7 @@ namespace av_router {
 		boost::asio::deadline_timer m_timer;
 		boost::shared_mutex m_request_callback_mtx;
 		http_request_callback_table m_http_request_callbacks;
+		boost::asio::ssl::context m_ssl_context;
 	};
 
 }

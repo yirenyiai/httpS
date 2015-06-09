@@ -9,10 +9,18 @@ namespace av_router {
 	http_server::http_server(io_service_pool& ios, unsigned short port, std::string address /*= "0.0.0.0"*/)
 		: m_io_service_pool(ios)
 		, m_io_service(ios.get_io_service())
+		, m_ssl_context(ios.get_io_service(), boost::asio::ssl::context::sslv23)
 		, m_acceptor(m_io_service)
 		, m_listening(false)
 		, m_timer(m_io_service)
 	{
+		m_ssl_context.set_options(boost::asio::ssl::context::default_workarounds| boost::asio::ssl::context::no_sslv2 | boost::asio::ssl::context::single_dh_use);
+		//m_ssl_context.set_password_callback(boost::bind(&server::get_password, this));
+		//m_ssl_context.use_certificate_chain_file("server.pem");
+		//m_ssl_context.use_private_key_file("server.pem", boost::asio::ssl::context::pem);
+		//m_ssl_context.use_tmp_dh_file("dh512.pem");
+
+
 		boost::asio::ip::tcp::resolver resolver(m_io_service);
 		std::ostringstream port_string;
 		port_string.imbue(std::locale("C"));

@@ -46,13 +46,15 @@ int main(int argc, char** argv)
 			return 0;
 		}
 
+
+
 		// 指定线程并发数.
 		io_service_pool io_pool(num_threads);
 		// 创建 http 服务器.
 		http_server http_serv(io_pool, http_port);
 
 		http_serv.add_uri_handler("/test", [](const request&, http_connection_ptr, http_connection_manager&){
-			printf("接收到一个请求\n");
+			printf("接收到一个请求(%d)\n", GetCurrentThreadId());
 		});
 
 		// 启动 HTTPD.
