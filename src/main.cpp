@@ -27,9 +27,9 @@ int main(int argc, char** argv)
 			("help,h", "help message")
 			("version", "current avrouter version")
 
-			("httpport", po::value<unsigned short>(&http_port)->default_value(9999), "http RPC listen port")
+			("httpport", po::value<unsigned short>(&http_port)->default_value(80), "http RPC listen port")
 			("thread", po::value<int>(&num_threads)->default_value(boost::thread::hardware_concurrency()), "threads")
-			("pool", po::value<int>(&pool_size)->default_value(16), "connection pool size")
+			("pool", po::value<int>(&pool_size)->default_value(8), "connection pool size")
 
 			("db_host", po::value<std::string>(&db_host)->default_value("tcp://192.168.1.254:3306/zhushou_test"), "connection data base host")
 			("db_user_name", po::value<std::string>(&db_user_name)->default_value("root"), "connection data base user name")
@@ -51,7 +51,9 @@ int main(int argc, char** argv)
 		// 创建 http 服务器.
 		http_server http_serv(io_pool, http_port);
 
-		// http_serv.add_uri_handler("test", nullptr);
+		http_serv.add_uri_handler("/test", [](const request&, http_connection_ptr, http_connection_manager&){
+			printf("接收到一个请求\n");
+		});
 
 		// 启动 HTTPD.
 		LOG_DBG << "start httpd";

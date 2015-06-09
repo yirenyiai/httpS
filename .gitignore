@@ -49,3 +49,5 @@ Debug/*
 *.ilk
 *.pdb
 X64/*
+
+*.exe

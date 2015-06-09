@@ -304,7 +304,7 @@ namespace av_router
 	{
 		std::string method;
 		std::string uri;
-		std::string uri_params;		// 不关是get还是post，都有可能在uri中带参数。
+		std::vector<std::pair<std::string, std::string>> uri_params;		// 不关是get还是post，都有可能在uri中带参数。
 
 		int http_version_major;
 		int http_version_minor;
@@ -547,7 +547,8 @@ namespace av_router
 				}
 				else if (input == '?')
 				{
-					state_ = uri_params;
+					state_ = uri_params_key;
+					req.uri_params.push_back(std::pair<std::string, std::string>());
 					return boost::indeterminate;
 				}
 				else
@@ -555,7 +556,7 @@ namespace av_router
 					req.uri.push_back(input);
 					return boost::indeterminate;
 				}
-			case uri_params:
+			case uri_params_key:
 				{
 					if (input == ' ')
 					{
@@ -566,9 +567,39 @@ namespace av_router
 					{
 						return false;
 					}
+					else if (input == '=')
+					{
+						// 标准的HTTP协议中，如果参数名字存在等号。应该转成URLencode
+						state_ = uri_params_value;
+						return boost::indeterminate;
+					}
 					else
 					{
-						req.uri_params.push_back(input);
+						req.uri_params.rbegin()->first.push_back(input);
+						return boost::indeterminate;
+					}
+				}
+			case uri_params_value:
+				{
+					if (input == ' ')
+					{
+						state_ = http_version_h;
+						return boost::indeterminate;
+					}
+					else if (is_ctl(input))
+					{
+						return false;
+					}
+					else if (input == '&')
+					{
+						// 标准的HTTP协议中，如果参数名字存在 & 。应该转成URLencode
+						state_ = uri_params_key;
+						req.uri_params.push_back(std::pair<std::string, std::string>());
+						return boost::indeterminate;
+					}
+					else
+					{
+						req.uri_params.rbegin()->second.push_back(input);
 						return boost::indeterminate;
 					}
 				}
@@ -825,7 +856,8 @@ namespace av_router
 			method,
 			uri_start,
 			uri,
-			uri_params,
+			uri_params_key,
+			uri_params_value,
 			http_version_h,
 			http_version_t_1,
 			http_version_t_2,

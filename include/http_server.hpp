@@ -26,7 +26,7 @@ namespace av_router {
 	{
 		friend class http_connection;
 	public:
-		explicit http_server(io_service_pool& ios, unsigned short port, std::string address = "0.0.0.0");
+		explicit http_server(io_service_pool& ios, unsigned short port = 80, std::string address = "127.0.0.1");
 		~http_server();
 
 	public:
