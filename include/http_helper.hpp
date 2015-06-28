@@ -22,7 +22,7 @@
 # endif
 #endif // atoi64
 
-namespace av_router
+namespace http
 {
 	template <typename Iterator>
 	bool parse_http_status_line(Iterator begin, Iterator end,

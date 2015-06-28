@@ -4,7 +4,7 @@
 #include "include/logging.hpp"
 #include "include/http_server.hpp"
 
-namespace av_router {
+namespace http {
 
 	http_connection::http_connection(boost::asio::io_service& io, http_server& serv, http_connection_manager* connection_man)
 		: m_io_service(io)

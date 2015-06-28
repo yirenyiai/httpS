@@ -15,7 +15,7 @@
 #include <boost/asio/ssl.hpp>
 #include <boost/noncopyable.hpp>
 
-namespace av_router {
+namespace http {
 
 	typedef boost::function<void(const request&, http_connection_ptr, http_connection_manager&)> http_request_callback;
 	typedef std::map<std::string, http_request_callback> http_request_callback_table;

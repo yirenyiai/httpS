@@ -6,7 +6,7 @@ namespace po = boost::program_options;
 #include "include/io_service_pool.hpp"
 #include "include/http_server.hpp"
 
-using namespace av_router;
+using namespace http;
 
 int main(int argc, char** argv)
 {

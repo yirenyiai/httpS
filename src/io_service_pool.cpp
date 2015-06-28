@@ -6,7 +6,7 @@
 #include <boost/shared_ptr.hpp>
 
 
-namespace av_router {
+namespace http {
 
 	io_service_pool::io_service_pool(std::size_t pool_size)
 		: next_io_service_(0)

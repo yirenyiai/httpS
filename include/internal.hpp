@@ -26,7 +26,7 @@
 # pragma comment(lib, "Winmm.lib")
 #endif // _WIN32
 
-namespace av_router {
+namespace http {
 
 	using boost::int8_t;
 	using boost::uint8_t;

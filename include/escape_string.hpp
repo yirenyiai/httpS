@@ -19,7 +19,7 @@
 
 #include "utf8.hpp"
 
-namespace av_router {
+namespace http {
 namespace detail {
 
 static const char hex_chars[] = "0123456789abcdef";

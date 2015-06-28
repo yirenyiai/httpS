@@ -4,7 +4,7 @@ using namespace boost::posix_time;
 
 #include "include/http_server.hpp"
 
-namespace av_router {
+namespace http {
 
 	http_server::http_server(io_service_pool& ios, unsigned short port, std::string address /*= "0.0.0.0"*/)
 		: m_io_service_pool(ios)

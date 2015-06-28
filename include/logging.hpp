@@ -31,7 +31,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 
-namespace av_router {
+namespace http {
 
 	///内部使用的简易日志类.
 	// 使用说明:
@@ -315,11 +315,11 @@ namespace av_router {
 			return *this;
 		}
 	};
-} // namespace av_router
+} // namespace http
 
 #define INIT_LOGGER(logfile) do \
 	{ \
-		av_router::auto_logger_file& file = av_router::aux::writer_single<av_router::auto_logger_file>(); \
+		http::auto_logger_file& file = http::aux::writer_single<http::auto_logger_file>(); \
 		std::string filename = logfile; \
 		if (!filename.empty()) \
 			file.open(filename.c_str(), std::ios::in | std::ios::out | std::ios::app); \
@@ -327,7 +327,7 @@ namespace av_router {
 
 #define AUTO_LOGGER(path) do \
 	{ \
-		av_router::auto_logger_file& file = av_router::aux::writer_single<av_router::auto_logger_file>(); \
+		http::auto_logger_file& file = http::aux::writer_single<http::auto_logger_file>(); \
 		std::string filename = "*"; \
 		filename = std::string(path) + filename; \
 		if (!filename.empty()) \
@@ -337,19 +337,19 @@ namespace av_router {
 
 #if (defined(DEBUG) || defined(_DEBUG) || defined(ENABLE_LOGGER)) && !defined(DISABLE_LOGGER)
 
-#define LOG_DBG av_router::logger(av_router::LOGGER_DEBUG_STR)
-#define LOG_INFO av_router::logger(av_router::LOGGER_INFO_STR)
-#define LOG_WARN av_router::logger(av_router::LOGGER_WARN_STR)
-#define LOG_ERR av_router::logger(av_router::LOGGER_ERR_STR)
-#define LOG_FILE av_router::logger(av_router::LOGGER_FILE_STR, true)
+#define LOG_DBG http::logger(http::LOGGER_DEBUG_STR)
+#define LOG_INFO http::logger(http::LOGGER_INFO_STR)
+#define LOG_WARN http::logger(http::LOGGER_WARN_STR)
+#define LOG_ERR http::logger(http::LOGGER_ERR_STR)
+#define LOG_FILE http::logger(http::LOGGER_FILE_STR, true)
 
 #else
 
-#define LOG_DBG av_router::empty_logger()
-#define LOG_INFO av_router::empty_logger()
-#define LOG_WARN av_router::empty_logger()
-#define LOG_ERR av_router::empty_logger()
-#define LOG_FILE av_router::empty_logger()
+#define LOG_DBG http::empty_logger()
+#define LOG_INFO http::empty_logger()
+#define LOG_WARN http::empty_logger()
+#define LOG_ERR http::empty_logger()
+#define LOG_FILE http::empty_logger()
 
 #endif
 

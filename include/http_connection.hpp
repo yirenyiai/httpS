@@ -27,7 +27,7 @@ using namespace boost::posix_time;
 #include "http_helper.hpp"
 #include "logging.hpp"
 
-namespace av_router {
+namespace http {
 
 	class http_server;
 	class http_connection_manager;
